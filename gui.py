@@ -30,6 +30,17 @@ class Application(Frame):
         self.button1 = Button(self, text = "START", command = self.next_screen)
         self.button1.grid(row=3)
 
+        #Class Stuff
+        self.class_label = Label(self, text = "ECE 2524 UNIX Project 3")
+        self.class_label.grid(row=4)
+        
+        #Author Stuff
+        self.author_label = Label(self, text = "By Adam Donovan, Anthony Clifton,")
+        self.author_label.grid(row=5)
+
+        self.author_cont = Label(self, text = "and Andrew Shivers")
+        self.author_cont.grid(row=6)
+
     def next_screen(self):
         #Save input name
         self.user_name = StringVar()
@@ -40,6 +51,9 @@ class Application(Frame):
         self.label3.destroy()
         self.en1.destroy()
         self.button1.destroy()
+        self.class_label.destroy()
+        self.author_label.destroy()
+        self.author_cont.destroy()
         #Resize the frame
         gui.geometry("500x500")
         #Move to the main menu
@@ -116,70 +130,70 @@ class Application(Frame):
         
         import random
 
-def drawBoard(board):
+        def drawBoard(board):
 
 
-def getPlayerLetter():
-    print('Will you be x or o?')
-    letter = input().lower()
-    while letter != 'x' and letter != 'o':
-        print('That was not a valid letter! Pick again')
-        letter = input().lower()
-    if letter == 'x':
-        return ['x', 'o']
-    else:
-        return ['o', 'x']
+        def getPlayerLetter():
+            print('Will you be x or o?')
+            letter = input().lower()
+            while letter != 'x' and letter != 'o':
+                print('That was not a valid letter! Pick again')
+                letter = input().lower()
+            if letter == 'x':
+                return ['x', 'o']
+            else:
+                return ['o', 'x']
 
-def getPlayerMove(board, letter):
-    print('Where will you move? (1-9)')
-    move = input()
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isValidMove(board, move):
-        print('That was not a valid move! Pick again')
-        move = input()
-    board[move] = letter
-
-def isValidMove(board, move):
-    return board[move] == ' '
-
-def getComputerMove(board, completter, playerletter)
-    moved = False
-    validMoves = []
-    for i in range(1, 10):
-        if isValidMove(board, i):
-            validMoves.append(i)
-    for i in validMoves:
-        tempBoard = peekBoard(board)
-        tempBoard[i] == completter
-        if checkWin(tempBoard, completter):
-            board[i] = completter
-            moved = True
-    if moved == False:
-        for i in validMoves:
-        tempBoard = peekBoard(board)
-        tempBoard[i] == playerletter
-        if checkWin(tempBoard, playerletter):
-            board[i] = completter
-            moved = True
-    if moved == False:
-        for i in '1 3 7 9'.split() and i in validMoves:
-            
-
-
-def peekBoard(board):
-    tempBoard = []
-    for i in board:
-        tempBoard.append(i)
-    return tempBoard
-
-def checkWin(board, letter):
-
-def checkTie(board):
-    for i in range(1,10):
-        if isValidMove(board, i):
-            return False
-    return True
-
-# ==========================
+        def getPlayerMove(board, letter):
+            print('Where will you move? (1-9)')
+            move = input()
+            while move not in '1 2 3 4 5 6 7 8 9'.split() or not isValidMove(board, move):
+                print('That was not a valid move! Pick again')
+                move = input()
+            board[move] = letter
+        
+        def isValidMove(board, move):
+            return board[move] == ' '
+        
+        def getComputerMove(board, completter, playerletter)
+            moved = False
+            validMoves = []
+            for i in range(1, 10):
+                if isValidMove(board, i):
+                    validMoves.append(i)
+            for i in validMoves:
+                tempBoard = peekBoard(board)
+                tempBoard[i] == completter
+                if checkWin(tempBoard, completter):
+                    board[i] = completter
+                    moved = True
+            if moved == False:
+                for i in validMoves:
+                tempBoard = peekBoard(board)
+                tempBoard[i] == playerletter
+                if checkWin(tempBoard, playerletter):
+                    board[i] = completter
+                    moved = True
+            if moved == False:
+                for i in '1 3 7 9'.split() and i in validMoves:
+                    
+        
+        
+        def peekBoard(board):
+            tempBoard = []
+            for i in board:
+                tempBoard.append(i)
+            return tempBoard
+        
+        def checkWin(board, letter):
+        
+        def checkTie(board):
+            for i in range(1,10):
+                if isValidMove(board, i):
+                    return False
+            return True
+        
+        # ==========================
 
     def connect4(self):
         self.label4.destroy()
