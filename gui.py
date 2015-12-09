@@ -112,6 +112,7 @@ class Application(Frame):
         self.connect4_button.destroy()
         self.connect4_desc.destroy()
         self.connect4_desc_cont.destroy()
+        #Start Tic-Tac-Toe Code
 
     def connect4(self):
         self.label4.destroy()
