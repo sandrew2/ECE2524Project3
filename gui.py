@@ -98,7 +98,7 @@ class Application(Frame):
         import hangman
 
     def tictactoe(self):
-        import tictactoe
+        import TicTacToe
 
     def connect4(self):
         import mastermind_game
