@@ -12,6 +12,9 @@ def getPlayerLetter():
     letter = raw_input("What letter do you want to be? x or o")
     while letter != 'x' and letter != 'o':
         letter = raw_input('That was not a valid letter! Pick again')
+    print('7 8 9')
+    print('4 5 6')
+    print('1 2 3')
     if letter == 'x':
         return ['x', 'o']
     else:
