@@ -99,6 +99,7 @@ class Application(Frame):
 
     def tictactoe(self):
         import TicTacToe
+        TicTacToe.playGame()
 
     def connect4(self):
         import mastermind_game
