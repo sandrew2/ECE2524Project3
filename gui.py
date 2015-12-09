@@ -77,35 +77,31 @@ class Application(Frame):
         self.connect4_button = Button(self, text = "START", command = self.connect4)
         self.connect4_button.grid(row=7)
 
-        self.connect4_desc = Label(self, text = "Play the classic game of Connect Four versus a computer! Choose to be")
+        self.connect4_desc = Label(self, text = "Play the classic game of Mastermind versus a computer!")
         self.connect4_desc.grid(row=7, column=1, sticky=W)
-
-        self.connect4_desc_cont = Label(self, text = "Red or Black and see if you can best the computer!")
-        self.connect4_desc_cont.grid(row=8, column=1, sticky=W)
 
         #General Stuff
         self.divider = Label(self, text = "---------------------------------------------------------------------------")
-        self.divider.grid(row=9, column=1, sticky=W)
+        self.divider.grid(row=8, column=1, sticky=W)
         
         self.description = Label(self, text = "Each time you select a game it will open a new window with that game.")
-        self.description.grid(row=10, column=1, sticky=W)
+        self.description.grid(row=9, column=1, sticky=W)
 
         self.description2 = Label(self, text = "Simply close out of the game window when you are done with that")
-        self.description2.grid(row=11, column=1, sticky=W)
+        self.description2.grid(row=10, column=1, sticky=W)
 
         self.description3 = Label(self, text = "game and select a new one!")
-        self.description3.grid(row=12, column=1, sticky=W)
+        self.description3.grid(row=11, column=1, sticky=W)
 
 
     def hangman(self):
         import hangman
 
     def tictactoe(self):
-        import TicTacToe
-        TicTacToe.playGame()
+        import tictactoe
 
     def connect4(self):
-        import connect4
+        import mastermind_game
         
 
 #modify root window
@@ -117,4 +113,3 @@ app = Application(gui)
 
 #kick off the event loop
 gui.mainloop()
-
