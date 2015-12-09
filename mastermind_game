@@ -47,8 +47,6 @@ class Application(Frame):
         #characters
         for num in (0,1,2,3):
             self.code[num] = self.char_array[randint(0,5)]
-
-        print self.code
         
         #Clear the screen
         self.welcome.destroy()
@@ -89,6 +87,13 @@ class Application(Frame):
         self.text = Text(self, width = 25, height = 1, wrap=WORD)
         self.text.grid(row=4, column=1, sticky=W)
 
+        self.possible = Label(self, text = "Char's: # @ $ % & *")
+        self.possible.grid(row=5, sticky=W)
+
+        self.prev = Label(self, text="Previous entries and hints in command line")
+        self.prev.grid(row=6, column=1)
+                
+
         def get_in():
             self.guess = self.input_box.get()
             self.guess = self.guess.split()
@@ -115,14 +120,16 @@ class Application(Frame):
                 else:
                     elsewhere = 'False'
                     for x in (0,1,2,3):
-                        if(self.guess[x] == self.code[num]):
+                        if(self.guess[num] == self.code[x]):
                            self.hint[num] = 'O'
                            elsewhere = 'True'
                            x = 4
                         if(x == 3):
                             if(elsewhere == 'False'):
                                 self.hint[num] = '_'
+                                
         self.text.insert(0.0, self.hint)
+        print self.hint
         if(self.tries == 0):
             self.you_lose()
 
