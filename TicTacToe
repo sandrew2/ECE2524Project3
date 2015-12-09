@@ -81,45 +81,45 @@ def playAgain():
     return again.startswith('y')
 
 
-#====================
-while True:
-    theBoard = [' '] * 10
-    playerletter, computerletter = getPlayerLetter()
-    if playerletter == 'x':
-        turn = 'player'
-    else:
-        turn = 'computer'
-    gameIsPlaying = True
+def playGame():
+    while True:
+        theBoard = [' '] * 10
+        playerletter, computerletter = getPlayerLetter()
+        if playerletter == 'x':
+            turn = 'player'
+        else:
+            turn = 'computer'
+        gameIsPlaying = True
 
-    while gameIsPlaying:
-        if turn == 'player':
-            drawBoard(theBoard)
-            getPlayerMove(theBoard, playerletter)
-            if checkWin(theBoard, playerletter):
+        while gameIsPlaying:
+            if turn == 'player':
                 drawBoard(theBoard)
-                print('You Win!')
-                gameIsPlaying = False
-            else:
-                if checkTie(theBoard):
+                getPlayerMove(theBoard, playerletter)
+                if checkWin(theBoard, playerletter):
                     drawBoard(theBoard)
-                    print('Tie')
+                    print('You Win!')
                     gameIsPlaying = False
-                    break
                 else:
-                    turn = 'computer'
-        if turn == 'computer':
-            getComputerMove(theBoard, computerletter, playerletter)
-            if checkWin(theBoard, computerletter):
-                drawBoard(theBoard)
-                print('Sorry, you Lose')
-                gameIsPlaying = False
-            else:
-                if checkTie(theBoard):
+                    if checkTie(theBoard):
+                        drawBoard(theBoard)
+                        print('Tie')
+                        gameIsPlaying = False
+                        break
+                    else:
+                        turn = 'computer'
+            if turn == 'computer':
+                getComputerMove(theBoard, computerletter, playerletter)
+                if checkWin(theBoard, computerletter):
                     drawBoard(theBoard)
-                    print('It was a Tie')
+                    print('Sorry, you Lose')
                     gameIsPlaying = False
-                    break
                 else:
-                    turn = 'player'
-    if not playAgain():
-        break
+                    if checkTie(theBoard):
+                        drawBoard(theBoard)
+                        print('It was a Tie')
+                        gameIsPlaying = False
+                        break
+                    else:
+                        turn = 'player'
+        if not playAgain():
+            break
