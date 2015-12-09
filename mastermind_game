@@ -1,0 +1,82 @@
+#Mastermind Game
+
+from Tkinter import *
+from random import randint
+
+class Application(Frame):
+
+    def __init__(self, master):
+        Frame.__init__(self,master)
+        self.grid()
+        self.start_screen()
+
+    def start_screen(self):
+        #Create First Label
+        self.welcome = Label(self, text = "Welcome to the Game of Mastermind!")
+        self.welcome.grid()
+
+        #Directions
+        self.directions = Label(self, text = "The possible code characters are '#' '$' '%' '*' '@' '&'.")
+        self.directions.grid(row=1)
+
+        self.directions1 = Label(self, text = "You have 10 tries to guess the 4 character code.")
+        self.directions1.grid(row=2)
+
+        self.directions2 = Label(self, text = "If an 'X' is output, you guessed the right character in the right location.")
+        self.directions2.grid(row=3)
+
+        self.directions3 = Label(self, text = "If an 'O' is output, you guessed the right character in the wrong location.")
+        self.directions3.grid(row=4)
+
+        self.directions4 = Label(self, text = "If a '_' is output, the character is not in the code.")
+        self.directions4.grid(row=5)
+
+        self.directions5 = Label(self, text = "Repeats are allowed! Press start and good luck!")
+        self.directions5.grid(row=6)
+
+        self.start_btn = Button(self, text = "START", command = self.game)
+        self.start_btn.grid(row=7)
+
+    def game(self):
+        #Clear the screen
+        self.welcome.destroy()
+        self.directions.destroy()
+        self.directions1.destroy()
+        self.directions2.destroy()
+        self.directions3.destroy()
+        self.directions4.destroy()
+        self.directions5.destroy()
+        self.start_btn.destroy()
+        
+        #Initialize the possible character array and
+        #the code array
+        self.char_array = ['#', '$', '%', '*', '&', '@']
+        self.code = [' ', ' ', ' ', ' ']
+        
+        #Populate the code array with randomly chosen possible
+        #characters
+        for num in (0,1,2,3):
+            self.code[num] = self.char_array[randint(0,5)]
+        
+        #End game variable
+        #If 0 games running, 1 player lost, 2 player won
+        self.game_over = 0
+
+        #Number of guesses tried if 0, player loses
+        self.tries = 10
+
+        while (self.game_over == 0):
+            
+            
+
+        
+        
+        
+        
+
+game = Tk()
+game.title("Mastermind")
+
+app = Application(game)
+
+game.mainloop()
