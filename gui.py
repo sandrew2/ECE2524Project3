@@ -7,55 +7,42 @@ class Application(Frame):
     def __init__(self, master):
         Frame.__init__(self,master)
         self.grid()
-        self.create_widgets()
+        self.start_screen()
 
-    def create_widgets(self):
+    def start_screen(self):
         #Create First Label
         self.label1 = Label(self, text = "Welcome to the Mini-Game Console!")
         self.label1.grid()
 
         #Create Second Label
-        self.label2 = Label(self, text = "Enter your name then press start to begin!")
+        self.label2 = Label(self, text = "Press start to begin!")
         self.label2.grid(row=1)
-
-        #Create Third Label
-        self.label3 = Label(self, text = "Enter Name Here:")
-        self.label3.grid(row=2, sticky=W)
-
-        #Create Name Entry Box
-        self.en1 = Entry(self)
-        self.en1.grid(row=2, sticky=E)
 
         #Create Start Button
         self.button1 = Button(self, text = "START", command = self.next_screen)
-        self.button1.grid(row=3)
+        self.button1.grid(row=2)
 
         #Class Stuff
         self.class_label = Label(self, text = "ECE 2524 UNIX Project 3")
-        self.class_label.grid(row=4)
+        self.class_label.grid(row=3)
         
         #Author Stuff
         self.author_label = Label(self, text = "By Adam Donovan, Anthony Clifton,")
-        self.author_label.grid(row=5)
+        self.author_label.grid(row=4)
 
         self.author_cont = Label(self, text = "and Andrew Shivers")
-        self.author_cont.grid(row=6)
+        self.author_cont.grid(row=5)
 
     def next_screen(self):
-        #Save input name
-        self.user_name = StringVar()
-        self.user_name = self.en1.get()
         #Clear welcome screen
         self.label1.destroy()
         self.label2.destroy()
-        self.label3.destroy()
-        self.en1.destroy()
         self.button1.destroy()
         self.class_label.destroy()
         self.author_label.destroy()
         self.author_cont.destroy()
         #Resize the frame
-        gui.geometry("500x500")
+        gui.geometry("500x300")
         #Move to the main menu
         self.main_menu()
 
@@ -63,11 +50,8 @@ class Application(Frame):
         self.label4 = Label(self, text = "Main Menu", font = 38, fg="red")
         self.label4.grid(row=0)
 
-        self.label5 = Label(self, text ="Welcome to the fun")
-        self.label5.grid(row=1)
-
-        self.label6 = Label(self, textvariable = self.user_name)
-        self.label6.grid(row=2)
+        self.label5 = Label(self, text = "Would you like to play a game?")
+        self.label5.grid(row=1, column=1)
 
         #Hangman BTN and description
         self.hangman_button = Button(self, text = "START", command = self.hangman)
@@ -99,122 +83,37 @@ class Application(Frame):
         self.connect4_desc_cont = Label(self, text = "Red or Black and see if you can best the computer!")
         self.connect4_desc_cont.grid(row=8, column=1, sticky=W)
 
+        #General Stuff
+        self.divider = Label(self, text = "---------------------------------------------------------------------------")
+        self.divider.grid(row=9, column=1, sticky=W)
+        
+        self.description = Label(self, text = "Each time you select a game it will open a new window with that game.")
+        self.description.grid(row=10, column=1, sticky=W)
+
+        self.description2 = Label(self, text = "Simply close out of the game window when you are done with that")
+        self.description2.grid(row=11, column=1, sticky=W)
+
+        self.description3 = Label(self, text = "game and select a new one!")
+        self.description3.grid(row=12, column=1, sticky=W)
+
+
     def hangman(self):
-        self.label4.destroy()
-        self.label5.destroy()
-        self.label6.destroy()
-        self.hangman_button.destroy()
-        self.hangman_desc.destroy()
-        self.hangman_desc_cont.destroy()
-        self.tictactoe_button.destroy()
-        self.tictactoe_desc.destroy()
-        self.tictactoe_desc_cont.destroy()
-        self.connect4_button.destroy()
-        self.connect4_desc.destroy()
-        self.connect4_desc_cont.destroy()
+        import hangman
 
     def tictactoe(self):
-        self.label4.destroy()
-        self.label5.destroy()
-        self.label6.destroy()
-        self.hangman_button.destroy()
-        self.hangman_desc.destroy()
-        self.hangman_desc_cont.destroy()
-        self.tictactoe_button.destroy()
-        self.tictactoe_desc.destroy()
-        self.tictactoe_desc_cont.destroy()
-        self.connect4_button.destroy()
-        self.connect4_desc.destroy()
-        self.connect4_desc_cont.destroy()
-        #Start Tic-Tac-Toe Code
-        
-        import random
-
-        def drawBoard(board):
-
-
-        def getPlayerLetter():
-            print('Will you be x or o?')
-            letter = input().lower()
-            while letter != 'x' and letter != 'o':
-                print('That was not a valid letter! Pick again')
-                letter = input().lower()
-            if letter == 'x':
-                return ['x', 'o']
-            else:
-                return ['o', 'x']
-
-        def getPlayerMove(board, letter):
-            print('Where will you move? (1-9)')
-            move = input()
-            while move not in '1 2 3 4 5 6 7 8 9'.split() or not isValidMove(board, move):
-                print('That was not a valid move! Pick again')
-                move = input()
-            board[move] = letter
-        
-        def isValidMove(board, move):
-            return board[move] == ' '
-        
-        def getComputerMove(board, completter, playerletter)
-            moved = False
-            validMoves = []
-            for i in range(1, 10):
-                if isValidMove(board, i):
-                    validMoves.append(i)
-            for i in validMoves:
-                tempBoard = peekBoard(board)
-                tempBoard[i] == completter
-                if checkWin(tempBoard, completter):
-                    board[i] = completter
-                    moved = True
-            if moved == False:
-                for i in validMoves:
-                tempBoard = peekBoard(board)
-                tempBoard[i] == playerletter
-                if checkWin(tempBoard, playerletter):
-                    board[i] = completter
-                    moved = True
-            if moved == False:
-                for i in '1 3 7 9'.split() and i in validMoves:
-                    
-        
-        
-        def peekBoard(board):
-            tempBoard = []
-            for i in board:
-                tempBoard.append(i)
-            return tempBoard
-        
-        def checkWin(board, letter):
-        
-        def checkTie(board):
-            for i in range(1,10):
-                if isValidMove(board, i):
-                    return False
-            return True
-        
-        # ==========================
+        import tictactoe
 
     def connect4(self):
-        self.label4.destroy()
-        self.label5.destroy()
-        self.label6.destroy()
-        self.hangman_button.destroy()
-        self.hangman_desc.destroy()
-        self.hangman_desc_cont.destroy()
-        self.tictactoe_button.destroy()
-        self.tictactoe_desc.destroy()
-        self.tictactoe_desc_cont.destroy()
-        self.connect4_button.destroy()
-        self.connect4_desc.destroy()
-        self.connect4_desc_cont.destroy()
+        import connect4
+        
 
 #modify root window
 gui = Tk()
 gui.title("GameConsole")
-gui.geometry("230x200")
+gui.geometry("200x130")
 
 app = Application(gui)
 
 #kick off the event loop
 gui.mainloop()
+
