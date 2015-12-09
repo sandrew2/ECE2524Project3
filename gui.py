@@ -1,7 +1,6 @@
 #Main GUI
 
 from Tkinter import *
-from TicTacToe import *
 
 class Application(Frame):
 
@@ -102,8 +101,8 @@ class Application(Frame):
         import hangman
 
     def tictactoe(self):
-        import tictactoe
-        playGame()
+        import TicTacToe
+        TicTacToe.playGame()
 
     def connect4(self):
         import connect4
