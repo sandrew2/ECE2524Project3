@@ -5,7 +5,6 @@ from random import randint
 
 class Application(Frame):
 
-    #Initialize Window
     def __init__(self, master):
         Frame.__init__(self,master)
         self.grid()
@@ -94,7 +93,7 @@ class Application(Frame):
         self.prev = Label(self, text="Previous entries and hints in command line")
         self.prev.grid(row=6, column=1)
                 
-        #Gets the input upon pressing the enter button
+
         def get_in():
             self.guess = self.input_box.get()
             self.guess = self.guess.split()
@@ -105,19 +104,16 @@ class Application(Frame):
             self.tries_rem_out.grid(row=1, column=1, stick=W)
             self.text.delete(0.0, END)
             self.check_input()
-        #Enter Button
+
         self.get_input = Button(self, text= "Enter", command=get_in)
         self.get_input.grid(row=2,column=2)
 
-    #Checks the input
     def check_input(self):
         self.hint = [' ', ' ', ' ', ' ']
-        #if the guess matches the code you win
         if (self.guess == self.code):
             print "true"
             self.you_win()
         else:
-            #this does all the stuff with the x, o, and space for incorrect outputs
             for num in (0,1,2,3):
                 if(self.guess[num] == self.code[num]):
                    self.hint[num] = 'X'
@@ -131,15 +127,13 @@ class Application(Frame):
                         if(x == 3):
                             if(elsewhere == 'False'):
                                 self.hint[num] = '_'
-        #Outputs the x, o, and spaces      
+                                
         self.text.insert(0.0, self.hint)
         print self.hint
-        #if you have no tries remaining you lose
         if(self.tries == 0):
             self.you_lose()
 
     def you_win(self):
-        #clears screen
         self.game_title.destroy()
         self.tries_rem.destroy()
         self.tries_rem_out.destroy()
@@ -148,8 +142,9 @@ class Application(Frame):
         self.your_hint.destroy()
         self.text.destroy()
         self.get_input.destroy()
+        self.possible.destroy()
+        self.prev.destroy()
 
-        #outputs a win message screen
         self.win_mess = Label(self, text = "Congradulations! You Win!")
         self.win_mess.grid()
 
@@ -163,7 +158,6 @@ class Application(Frame):
         self.reset_btn.grid(row=4)
                             
     def you_lose(self):
-    #clears screen
         self.game_title.destroy()
         self.tries_rem.destroy()
         self.tries_rem_out.destroy()
@@ -172,8 +166,9 @@ class Application(Frame):
         self.your_hint.destroy()
         self.text.destroy()
         self.get_input.destroy()
-        
-        #outputs a lose message screen
+        self.possible.destroy()
+        self.prev.destroy()
+
         self.win_mess = Label(self, text = "Game Over. You lose!")
         self.win_mess.grid()
 
@@ -187,7 +182,6 @@ class Application(Frame):
         self.reset_btn.grid(row=4)
 
     def reset_game(self):
-        #resets screen from lose or win message to start a new game
         self.win_mess.destroy()
         self.win_mess1.destroy()
         self.win_mess2.destroy()
