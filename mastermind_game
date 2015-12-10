@@ -5,6 +5,7 @@ from random import randint
 
 class Application(Frame):
 
+    #Initialize Window
     def __init__(self, master):
         Frame.__init__(self,master)
         self.grid()
@@ -38,16 +39,6 @@ class Application(Frame):
         self.start_btn.grid(row=7)
 
     def game(self):
-        #Clear the screen
-        self.welcome.destroy()
-        self.directions.destroy()
-        self.directions1.destroy()
-        self.directions2.destroy()
-        self.directions3.destroy()
-        self.directions4.destroy()
-        self.directions5.destroy()
-        self.start_btn.destroy()
-        
         #Initialize the possible character array and
         #the code array
         self.char_array = ['#', '$', '%', '*', '&', '@']
@@ -58,24 +49,155 @@ class Application(Frame):
         for num in (0,1,2,3):
             self.code[num] = self.char_array[randint(0,5)]
         
-        #End game variable
-        #If 0 games running, 1 player lost, 2 player won
-        self.game_over = 0
+        #Clear the screen
+        self.welcome.destroy()
+        self.directions.destroy()
+        self.directions1.destroy()
+        self.directions2.destroy()
+        self.directions3.destroy()
+        self.directions4.destroy()
+        self.directions5.destroy()
+        self.start_btn.destroy()
 
         #Number of guesses tried if 0, player loses
         self.tries = 10
 
-        while (self.game_over == 0):
-            
-            
+        #Initializes the game screen
+        self.game_title = Label(self, text = "Lets play Mastermind!")
+        self.game_title.grid(row=0, column=1, sticky=W)
+
+        self.tries_rem = Label(self, text = "Tries Remaining: ")
+        self.tries_rem.grid(row=1, sticky=W)
+
+        self.tries_rem_out = Label(self, text=self.tries)
+        self.tries_rem_out.grid(row=1, column=1, stick=W)
+
+        self.game_in = Label(self, text="Input your guess,")
+        self.game_in.grid(row=2, sticky=W)
+
+        self.game_in = Label(self, text="please include spaces")
+        self.game_in.grid(row=3, sticky=W)
+
+        self.input_box = Entry(self)
+        self.input_box.grid(row=2, column=1)
+        self.guess = [' ', ' ', ' ', ' ']
+
+        self.your_hint = Label(self, text = "Hint:")
+        self.your_hint.grid(row=4, sticky=E)
+        
+        self.text = Text(self, width = 25, height = 1, wrap=WORD)
+        self.text.grid(row=4, column=1, sticky=W)
+
+        self.possible = Label(self, text = "Char's: # @ $ % & *")
+        self.possible.grid(row=5, sticky=W)
+
+        self.prev = Label(self, text="Previous entries and hints in command line")
+        self.prev.grid(row=6, column=1)
+                
+        #Gets the input upon pressing the enter button
+        def get_in():
+            self.guess = self.input_box.get()
+            self.guess = self.guess.split()
+            print self.guess
+            self.tries -= 1
+            self.tries_rem_out.destroy()
+            self.tries_rem_out = Label(self, text=self.tries)
+            self.tries_rem_out.grid(row=1, column=1, stick=W)
+            self.text.delete(0.0, END)
+            self.check_input()
+        #Enter Button
+        self.get_input = Button(self, text= "Enter", command=get_in)
+        self.get_input.grid(row=2,column=2)
+
+    #Checks the input
+    def check_input(self):
+        self.hint = [' ', ' ', ' ', ' ']
+        #if the guess matches the code you win
+        if (self.guess == self.code):
+            print "true"
+            self.you_win()
+        else:
+            #this does all the stuff with the x, o, and space for incorrect outputs
+            for num in (0,1,2,3):
+                if(self.guess[num] == self.code[num]):
+                   self.hint[num] = 'X'
+                else:
+                    elsewhere = 'False'
+                    for x in (0,1,2,3):
+                        if(self.guess[num] == self.code[x]):
+                           self.hint[num] = 'O'
+                           elsewhere = 'True'
+                           x = 4
+                        if(x == 3):
+                            if(elsewhere == 'False'):
+                                self.hint[num] = '_'
+        #Outputs the x, o, and spaces      
+        self.text.insert(0.0, self.hint)
+        print self.hint
+        #if you have no tries remaining you lose
+        if(self.tries == 0):
+            self.you_lose()
+
+    def you_win(self):
+        #clears screen
+        self.game_title.destroy()
+        self.tries_rem.destroy()
+        self.tries_rem_out.destroy()
+        self.game_in.destroy()
+        self.input_box.destroy()
+        self.your_hint.destroy()
+        self.text.destroy()
+        self.get_input.destroy()
+
+        #outputs a win message screen
+        self.win_mess = Label(self, text = "Congradulations! You Win!")
+        self.win_mess.grid()
+
+        self.win_mess1 = Label(self, text = "Press reset to start a new game.")
+        self.win_mess1.grid(row=1)
+
+        self.win_mess2 = Label(self, text = "Or close this window and select a new game!")
+        self.win_mess2.grid(row=2)
+
+        self.reset_btn = Button(self, text="RESET", command = self.reset_game)
+        self.reset_btn.grid(row=4)
+                            
+    def you_lose(self):
+    #clears screen
+        self.game_title.destroy()
+        self.tries_rem.destroy()
+        self.tries_rem_out.destroy()
+        self.game_in.destroy()
+        self.input_box.destroy()
+        self.your_hint.destroy()
+        self.text.destroy()
+        self.get_input.destroy()
+        
+        #outputs a lose message screen
+        self.win_mess = Label(self, text = "Game Over. You lose!")
+        self.win_mess.grid()
+
+        self.win_mess1 = Label(self, text = "Press reset to start a new game.")
+        self.win_mess1.grid(row=1)
+
+        self.win_mess2 = Label(self, text = "Or close this window and select a new game!")
+        self.win_mess2.grid(row=2)
+
+        self.reset_btn = Button(self, text="RESET", command = self.reset_game)
+        self.reset_btn.grid(row=4)
+
+    def reset_game(self):
+        #resets screen from lose or win message to start a new game
+        self.win_mess.destroy()
+        self.win_mess1.destroy()
+        self.win_mess2.destroy()
+        self.reset_btn.destroy()
+        self.game()
 
         
-        
-        
-        
-
 game = Tk()
 game.title("Mastermind")
+game.geometry("390x200")
 
 app = Application(game)
 

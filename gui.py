@@ -3,7 +3,7 @@
 from Tkinter import *
 
 class Application(Frame):
-
+    #Initializes the GUI
     def __init__(self, master):
         Frame.__init__(self,master)
         self.grid()
@@ -29,7 +29,7 @@ class Application(Frame):
         #Author Stuff
         self.author_label = Label(self, text = "By Adam Donovan, Anthony Clifton,")
         self.author_label.grid(row=4)
-
+        
         self.author_cont = Label(self, text = "and Andrew Shivers")
         self.author_cont.grid(row=5)
 
@@ -47,9 +47,10 @@ class Application(Frame):
         self.main_menu()
 
     def main_menu(self):
+        #Label Main Menu
         self.label4 = Label(self, text = "Main Menu", font = 38, fg="red")
         self.label4.grid(row=0)
-
+        #SAW Movies Reference
         self.label5 = Label(self, text = "Would you like to play a game?")
         self.label5.grid(row=1, column=1)
 
@@ -73,38 +74,41 @@ class Application(Frame):
         self.tictactoe_desc_cont = Label(self, text = "X's or O's and see if you can best the computer!")
         self.tictactoe_desc_cont.grid(row=6, column=1, sticky=W)
 
-        #Connect4 BTN and description
-        self.connect4_button = Button(self, text = "START", command = self.connect4)
-        self.connect4_button.grid(row=7)
+        #Mastermind BTN and description
+        self.mastermind_button = Button(self, text = "START", command = self.mastermind)
+        self.mastermind_button.grid(row=7)
 
-        self.connect4_desc = Label(self, text = "Play the classic game of Connect Four versus a computer! Choose to be")
-        self.connect4_desc.grid(row=7, column=1, sticky=W)
-
-        self.connect4_desc_cont = Label(self, text = "Red or Black and see if you can best the computer!")
-        self.connect4_desc_cont.grid(row=8, column=1, sticky=W)
+        self.mastermind_desc = Label(self, text = "Play the classic game of Mastermind versus a computer!")
+        self.mastermind_desc.grid(row=7, column=1, sticky=W)
 
         #General Stuff
         self.divider = Label(self, text = "---------------------------------------------------------------------------")
-        self.divider.grid(row=9, column=1, sticky=W)
+        self.divider.grid(row=8, column=1, sticky=W)
         
         self.description = Label(self, text = "Each time you select a game it will open a new window with that game.")
-        self.description.grid(row=10, column=1, sticky=W)
+        self.description.grid(row=9, column=1, sticky=W)
 
         self.description2 = Label(self, text = "Simply close out of the game window when you are done with that")
-        self.description2.grid(row=11, column=1, sticky=W)
+        self.description2.grid(row=10, column=1, sticky=W)
 
         self.description3 = Label(self, text = "game and select a new one!")
-        self.description3.grid(row=12, column=1, sticky=W)
+        self.description3.grid(row=11, column=1, sticky=W)
 
-
+    #Launches hangman and closes the GUI
     def hangman(self):
+        gui.destroy()
         import hangman
 
+    #Launches tictactoe and closes the GUI
     def tictactoe(self):
-        import tictactoe
+        gui.destroy()
+        import TicTacToe
+        TicTacToe.playGame()
 
-    def connect4(self):
-        import connect4
+    #Launches mastermind and closes the GUI
+    def mastermind(self):
+        gui.destroy()
+        import mastermind_game
         
 
 #modify root window
@@ -116,4 +120,3 @@ app = Application(gui)
 
 #kick off the event loop
 gui.mainloop()
-
