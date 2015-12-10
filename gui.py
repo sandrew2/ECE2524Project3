@@ -58,7 +58,7 @@ class Application(Frame):
         self.hangman_button = Button(self, text = "START", command = self.hangman)
         self.hangman_button.grid(row=3)
 
-        self.hangman_desc = Label(self, text = "Play the classic game of hangman versus a computer! You have 7 tries")
+        self.hangman_desc = Label(self, text = "Play the classic game of hangman versus a computer! You have 6 tries")
         self.hangman_desc.grid(row=3, column=1, sticky=W)
 
         self.hangman_desc_cont = Label(self, text = "to guess the word before the man hangs!")
