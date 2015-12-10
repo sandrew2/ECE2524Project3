@@ -83,7 +83,7 @@ class Application(Frame):
         self.gameOver = False
         
         #guess entry window and submit button
-        self.rules = Label(self, text = "Rules:\nAll letters are lower case\nType a letter to guess in the box and hit submit")
+        self.rules = Label(self, text = "Rules: Type a letter to guess in the box and hit submit")
         self.rules.grid(row=0, sticky=W)
         self.entry_window = Entry(self)
         self.entry_window.grid(row=1, sticky=W)
@@ -94,53 +94,66 @@ class Application(Frame):
         self.feedback.insert(0.0, self.HANGMANPICS[0])
         self.guesses = Label(self, text = self.missedLetters)
         self.guesses.grid(row=3, sticky=W)
-
-        self.correct = Label(self, text = self.correctLetters)
+        self.reset = Button(self, text = "Reset", command = self.reset_method)
+        self.reset.grid(row=0, sticky=E)
+        self.blanks = '-' * (len(self.answer)-1)
+        self.correct = Label(self, text = self.blanks)
         self.correct.grid(row=3, sticky=E)
-        
         
     def update_hang(self):
 
         self.feedback.delete(0.0, END)
 
-        
+        #incrementers for loops
+        i=0
+        j=0
         #updates letter guess Label
         letter = self.entry_window.get()
         #ensures that the user input is lowercase
         letter = letter.lower()
-        blanks = '-' * len(self.answer)
         if len(letter) != 1:
             self.feedback.insert(0.0, "Enter a LETTER please")
         
-        for i in range(len(self.answer)):
-            if letter in self.answer:
-                self.correctLetters += letter
-                foundAllLetters = True
-                if self.answer[i] not in self.correctLetters:
-                    foundAllLetters = False
-                    break
-                
-                if foundAllLetters:
-                    self.correct["text"] = "You have won the answer is : " + self.answer
-                    self.gameOver = True
-                
-            else:
-                self.missedLetters += letter
-                #check to make sure they didn't run out of attempts
-                if len(self.missedLetters) == len(self.HANGMANPICS) - 1:
-                    self.guesses["text"] = "You've run out of guesses. \nAnswer was: " + self.answer
-                    self.gameOver = True
-        for j in range(len(self.answer)):
-            if self.answer[j] in self.correctLetters:
-                blanks = blanks[:j] + self.answer[j] + blanks[j+1:]
 
-        self.correct["text"] = blanks
+        if letter in self.answer:
+            self.correctLetters += letter
+            foundAllLetters = True
+            
+            if self.answer[i] not in self.correctLetters:
+                foundAllLetters = False
+               
+        else:
+            self.missedLetters += letter
+            #check to make sure they didn't run out of attempts
+            if len(self.missedLetters) == len(self.HANGMANPICS) - 1:
+                self.guesses["text"] = "You've run out of guesses. \nAnswer was: " + self.answer
+                self.gameOver = True
+            i += 1
+            
+        while (j < len(self.answer)-1):
+            if self.answer[j] in self.correctLetters:
+                self.blanks = self.blanks[:j] + self.answer[j] + self.blanks[j+1:]
+            j += 1
+
+        self.correct["text"] = self.blanks
         
         hangIndex = len(self.missedLetters)
         self.feedback.insert(0.0, self.HANGMANPICS[hangIndex])
-        
-        self.feedback.insert(0.0, "answer is: " + self.answer)
-        self.feedback.insert(0.0, "incorrect guess count is : " + str(hangIndex) + "\n")
+
+        if (self.blanks + "\n") == self.answer:
+            self.correct["text"] = "You have won the answer is : " + self.answer
+            self.feedback.insert(0.0, "GAME OVER!")
+
+
+    def reset_method(self):
+        self.rules.destroy()
+        self.entry_window.destroy()
+        self.submit.destroy()
+        self.feedback.destroy()
+        self.guesses.destroy()
+        self.correct.destroy()
+        self.reset.destroy()
+        self.hang_man()
 
 
 #modify root window
