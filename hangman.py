@@ -72,66 +72,81 @@ class Application(Frame):
  =========''']
 
         
-        #hangman game method
-        self.word_select = random.randint(0, 16)
-        self.guess_count = 0
+        self.word_select = random.randint(0, 20)
         self.words=dictionary.readlines()
         self.answer = self.words[self.word_select]
         #close the file now
         dictionary.close()
+        #initialize other necessary variables
+        self.correctLetters = ''
+        self.missedLetters = ''
+        self.gameOver = False
         
         #guess entry window and submit button
         self.rules = Label(self, text = "Rules:\nAll letters are lower case\nType a letter to guess in the box and hit submit")
-        self.rules.grid(row=0, column=0)
+        self.rules.grid(row=0, sticky=W)
         self.entry_window = Entry(self)
         self.entry_window.grid(row=1, sticky=W)
         self.submit = Button(self, text = "Submit", command = self.update_hang)
         self.submit.grid(row=1, sticky=E)
-        self.feedback = Text(self, width=40, height=15, wrap=NONE)
+        self.feedback = Text(self, width=45, height=15, wrap=NONE)
         self.feedback.grid(row=2)
-        self.letter_guesses = "You've guessed: "
-        self.guesses = Label(self, text = self.letter_guesses)
-        self.guesses.grid(row=3, stick=W)        
+        self.feedback.insert(0.0, self.HANGMANPICS[0])
+        self.guesses = Label(self, text = self.missedLetters)
+        self.guesses.grid(row=3, sticky=W)
+
+        self.correct = Label(self, text = self.correctLetters)
+        self.correct.grid(row=3, sticky=E)
+        
         
     def update_hang(self):
-        #updates feedback window
-        #currently WILL increment every time
-        #not just when wrong
-        #fix
+
         self.feedback.delete(0.0, END)
-        for i in self.HANGMANPICS:
-            if i == self.guess_count:
-                self.feedback.insert(self.HANGMANPICS[i])
-        self.guess_count +=1
+
         
         #updates letter guess Label
         letter = self.entry_window.get()
-        for i in self.answer:
-            if letter == i:
-                boolVar = TRUE
+        #ensures that the user input is lowercase
+        letter = letter.lower()
+        blanks = '-' * len(self.answer)
+        if len(letter) != 1:
+            self.feedback.insert(0.0, "Enter a LETTER please")
+        
+        for i in range(len(self.answer)):
+            if letter in self.answer:
+                self.correctLetters += letter
+                foundAllLetters = True
+                if self.answer[i] not in self.correctLetters:
+                    foundAllLetters = False
+                    break
+                
+                if foundAllLetters:
+                    self.correct["text"] = "You have won the answer is : " + self.answer
+                    self.gameOver = True
+                
             else:
-                boolVar = FALSE
-        if boolVar == TRUE:
-            #do stuff
-            for inc in self.answer:
-                if letter == inc:
-                    print(letter)
-                else:
-                    print("_")
-        else:
-            self.letter_guesses += " " + letter + ","
-            self.guesses["text"] = self.letter_guesses
-            
+                self.missedLetters += letter
+                #check to make sure they didn't run out of attempts
+                if len(self.missedLetters) == len(self.HANGMANPICS) - 1:
+                    self.guesses["text"] = "You've run out of guesses. \nAnswer was: " + self.answer
+                    self.gameOver = True
+        for j in range(len(self.answer)):
+            if self.answer[j] in self.correctLetters:
+                blanks = blanks[:j] + self.answer[j] + blanks[j+1:]
+
+        self.correct["text"] = blanks
+        
+        hangIndex = len(self.missedLetters)
+        self.feedback.insert(0.0, self.HANGMANPICS[hangIndex])
         
         self.feedback.insert(0.0, "answer is: " + self.answer)
-        self.feedback.insert(0.0, "guess count is : " + str(self.guess_count) + " ")
-        
-        
+        self.feedback.insert(0.0, "incorrect guess count is : " + str(hangIndex) + "\n")
+
 
 #modify root window
 gui = Tk()
-gui.title("GameConsole")
-gui.geometry("400x400")
+gui.title("Hangman")
+gui.geometry("430x400")
 
 app = Application(gui)
 
